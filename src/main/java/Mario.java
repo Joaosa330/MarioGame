@@ -1,15 +1,16 @@
-class Mario {
+public class Mario {
     private int x;
     private int y;
-    private char symbol; // Store the symbol as a single character
+    private char symbol;
 
-    public Mario(int x, int y) {
+    // Constructor
+    public Mario(int x, int y, char m) {
         this.x = x;
         this.y = y;
-        // Assign a default symbol for Mario
-        this.symbol = 'M'; // You can change this to whatever character you like
+        this.symbol = symbol;
     }
 
+    // Getter methods
     public int getX() {
         return x;
     }
@@ -18,6 +19,7 @@ class Mario {
         return y;
     }
 
+    // Movement methods
     public void moveUp() {
         y--;
     }
@@ -33,13 +35,14 @@ class Mario {
     public void moveRight() {
         x++;
     }
-
     public char getSymbol() {
-        return symbol; // Return the single character symbol
+        return symbol;
+    }
+    public void setX(int x) {
+        this.x = x;
     }
 
-    // You can add a method to change Mario's symbol if needed
-    public void setSymbol(char symbol) {
-        this.symbol = symbol;
+    public void setY(int y) {
+        this.y = y;
     }
 }

@@ -17,10 +17,11 @@ public class MarioGame {
         try {
             screen = new TerminalScreen(new DefaultTerminalFactory().createTerminal());
             screen.startScreen();
-
+            screen.setCursorPosition(null);
             // Adjust map size based on terminal size
             TerminalSize terminalSize = screen.getTerminalSize();
             map = new Map(terminalSize.getColumns(), terminalSize.getRows());
+            mario = new Mario(0, 0, 'M');
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -48,7 +49,7 @@ public class MarioGame {
         }
     }
 
-    private void renderGame() {
+    private void renderGame() throws IOException {
         char[][] gameMap = map.getMap();
         for (int y = 0; y < gameMap.length; y++) {
             for (int x = 0; x < gameMap[y].length; x++) {
@@ -56,6 +57,13 @@ public class MarioGame {
                 screen.setCharacter(x, y, character);
             }
         }
+        renderMap();
+        renderMario(); // Call renderMario() to render Mario on top of the map
+        screen.refresh();
+    }
+    private void renderMario() throws IOException {
+        TextCharacter marioCharacter = new TextCharacter('M');
+        screen.setCharacter(mario.getX(), mario.getY(), marioCharacter);
     }
 
     private void renderMap() throws IOException {
@@ -67,15 +75,6 @@ public class MarioGame {
             }
         }
     }
-
-    private void renderMario() {
-        Terminal terminal = screen.getTerminal();
-        try {
-            terminal.setCursorPosition(mario.getX(), mario.getY());
-            terminal.putCharacter(mario.getSymbol());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }    }
 
 
     private void processInput(KeyStroke keyStroke) {
